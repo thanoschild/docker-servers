@@ -1,0 +1,24 @@
+# Create directory for mongo config
+mkdir -p /Users/sumeet/Public/learning/mongodb
+
+# Generate keyfile with proper permissions
+openssl rand -base64 756 > /Users/sumeet/Public/learning/mongodb/mongodb-keyfile
+chmod 400 /Users/sumeet/Public/learning/mongodb/mongodb-keyfile
+
+# Stop any running containers
+docker-compose down
+
+# Remove existing volumes (if needed)
+docker volume prune -f
+
+# Start the container
+docker-compose up -d
+
+# Connect to the container
+docker exec -it mongodb mongosh -u admin -p admin
+
+# In the MongoDB shell, run:
+rs.initiate({
+  _id: "rs0",
+  members: [{ _id: 0, host: "localhost:27017" }]
+})

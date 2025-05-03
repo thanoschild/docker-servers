@@ -1,0 +1,31 @@
+docker run --name mongodb \
+ -p 27017:27017 \
+ -e MONGO_INITDB_ROOT_USERNAME=admin \
+ -e MONGO_INITDB_ROOT_PASSWORD=admin \
+ -v /Users/sumeet/examaxis/database:/data/db \
+ mongodb/mongodb-community-server:latest
+
+
+docker run --name mongodb \
+ -p 27017:27017 \
+ -e MONGODB_INITDB_ROOT_USERNAME=mongodb-prod \
+ -e MONGODB_INITDB_ROOT_PASSWORD=G3vZ3eT4pJ6nX2QY9fK1kC5 \
+ -v /root/mongodb:/data/db \
+ mongodb/mongodb-community-server:latest
+
+
+pm2 commands:
+-> check running app
+pm2 list
+-> stop an app
+m2 stop <app_name_or_id>
+-> restart an app
+pm2 restart <app_name_or_id>
+-> stop and delete an app
+pm2 delete <app_name_or_id>
+-> check logs
+pm2 logs <app_name_or_id>
+-> save process list
+pm2 save
+-> set pm2 to auto restart on reboot server
+pm2 startup

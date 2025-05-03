@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: mongodb
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=admin
+      - MONGODB_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - "27017:27017"
+    volumes:
+      - /Users/sumeet/examaxis/database:/data/db
+      - /Users/sumeet/Public/learning/mongodb/mongodb-keyfile:/data/mongodb-keyfile
+      - /Users/sumeet/Public/learning/mongodb/init:/docker-entrypoint-initdb.d
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/data/mongodb-keyfile"]
+    restart: always
