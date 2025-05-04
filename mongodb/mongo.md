@@ -15,10 +15,16 @@ docker volume prune -f
 docker-compose up -d
 
 # Connect to the container
-docker exec -it mongodb mongosh -u admin -p admin
+docker exec -it mongodb mongosh -u admin -p admin --authenticationDatabase admin
 
 # In the MongoDB shell, run:
 rs.initiate({
   _id: "rs0",
   members: [{ _id: 0, host: "localhost:27017" }]
 })
+
+# verify replica is created or not:
+rs.status()
+
+# connection string:
+mongodb://admin:admin@localhost:27017/?replicaSet=rs0&authSource=admin
