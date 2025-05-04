@@ -4,4 +4,8 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    volumes:
+      - /Users/sumeet/Public/db-volumes/redis:/data
+      - /Users/sumeet/git_repos/servers/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     restart: unless-stopped
