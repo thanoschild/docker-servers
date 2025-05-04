@@ -32,3 +32,8 @@ pull message
 ```shell
 kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --from-beginning
 ```
+
+pull message with a consumer group
+```shell
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --from-beginning --group my-consumer-group
+```
