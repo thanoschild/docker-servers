@@ -1,0 +1,29 @@
+public static void main(String[] args) {
+        String groupId = "test-group-2";  // Change group ID to reset offsets
+
+        Properties properties = new Properties();
+        properties.setProperty("bootstrap.servers", "localhost:9092,localhost:9094");
+        properties.setProperty("security.protocol", "SASL_PLAINTEXT");
+        properties.setProperty(SaslConfigs.SASL_MECHANISM, "PLAIN");
+        properties.setProperty(SaslConfigs.SASL_JAAS_CONFIG,
+                "org.apache.kafka.common.security.plain.PlainLoginModule required " +
+                        "username=\"admin\" password=\"admin-secret\";"
+        );
+        properties.setProperty("key.deserializer", StringDeserializer.class.getName());
+        properties.setProperty("value.deserializer", StringDeserializer.class.getName());
+        properties.setProperty("group.id", groupId);
+        properties.setProperty("auto.offset.reset", "earliest");
+        properties.setProperty("enable.auto.commit", "true"); // Ensures offsets are committed
+
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
+        consumer.subscribe(Arrays.asList("retention-topic", "another-topic"));
+
+        while (true) {
+            log.info("polling");
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(5000));
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.println("Key: " + record.key() + ", Value: " + record.value() +
+                        ", Partition: " + record.partition() + ", Offset: " + record.offset());
+            }
+        }
+    }
